@@ -1,0 +1,23 @@
+name: Main Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Sub-Workflow
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const workflow = await github.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_file: 'sub-workflow.yml',
+              ref: context.ref
+            });
+            console.log(`Workflow ${workflow.data.id} triggered.`);
