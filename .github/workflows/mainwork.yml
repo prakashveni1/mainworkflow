@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger Sub-Workflow
+      - name: Trigger subwork
         uses: actions/github-script@v5
         with:
           script: |
             const workflow = await github.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_file: 'sub-workflow.yml',
+              workflow_file: 'subwork.yml',
               ref: context.ref
             });
             console.log(`Workflow ${workflow.data.id} triggered.`);
